@@ -75,57 +75,13 @@ const proxy = {
     });
   },
   // My API Mock
-  'POST /api/login': (req, res) => {
-    const { password, userName, type } = req.body;
-    if (password === 'admin' && userName === 'admin') {
-      res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'admin',
-      });
-      return;
-    }
-    if (password === '123456' && userName === 'user') {
-      res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'user',
-      });
-      return;
-    }
-    res.send({
-      status: 'error',
-      type,
-      currentAuthority: 'guest',
-    });
-  },
-  'GET /api/logout': {
-    status: 'ok',
-  },
-  'GET /api/currentUser': {
-    $desc: '获取当前用户接口',
-    $body: {
-      userid: '1',
-      name: '教师一',
-    },
-  },
-  'GET /api/users': [
-    {
-      key: '1',
-      username: 'admin',
-      name: '教师一',
-    },
-    {
-      key: '2',
-      username: 'teacher2',
-      name: '教师二',
-    },
-    {
-      key: '3',
-      username: 'teacher3',
-      name: '教师三',
-    },
-  ],
+  'POST /api/login': 'http://localhost:8080',
+  'GET /api/logout': 'http://localhost:8080',
+  'GET /api/currentUser': 'http://localhost:8080',
+  'GET /api/users': 'http://localhost:8080',
+  'POST /api/users/': 'http://localhost:8080',
+  'PATCH /api/users/': 'http://localhost:8080',
+  'DELETE /api/users/': 'http://localhost:8080',
 };
 
 export default (noProxy ? {} : delay(proxy, 1000));

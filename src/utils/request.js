@@ -1,5 +1,5 @@
 import fetch from 'dva/fetch';
-import { notification } from 'antd';
+import { message, notification } from 'antd';
 import { routerRedux } from 'dva/router';
 import store from '../index';
 
@@ -20,6 +20,7 @@ const codeMessage = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
+
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
@@ -50,6 +51,7 @@ export default function request(url, options) {
   if (
     newOptions.method === 'POST' ||
     newOptions.method === 'PUT' ||
+    newOptions.method === 'PATCH' ||
     newOptions.method === 'DELETE'
   ) {
     if (!(newOptions.body instanceof FormData)) {
@@ -71,7 +73,16 @@ export default function request(url, options) {
   return fetch(url, newOptions)
     .then(checkStatus)
     .then(response => {
+      if (newOptions.method === 'POST' && response.status === 201) {
+        message.success('添加成功');
+        return response.text();
+      }
+      if (newOptions.method === 'PATCH' && response.status === 200) {
+        message.success('修改成功');
+        return response.text();
+      }
       if (newOptions.method === 'DELETE' || response.status === 204) {
+        message.success('删除成功');
         return response.text();
       }
       return response.json();
