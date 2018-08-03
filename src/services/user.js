@@ -2,7 +2,7 @@ import { stringify } from 'qs';
 import request from '../utils/request';
 
 export async function fetch(params) {
-  return request(`/api/users?${stringify(params)}`);
+  return request(`/api/users/?${stringify(params)}`);
 }
 
 export async function fetchCurrent() {
