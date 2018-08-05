@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Modal, Switch } from 'antd';
+import { Form, Input, Modal } from 'antd';
 
 const FormItem = Form.Item;
 
-class UserEditModal extends Component {
+class ClassesEditModal extends Component {
   static propTypes = {
     title: PropTypes.string,
-    record: PropTypes.array,
+    record: PropTypes.object,
     onOk: PropTypes.func,
   };
 
   static defaultProps = {
     title: '',
-    record: () => {},
+    record: {},
     onOk: () => {},
   };
 
@@ -49,8 +49,7 @@ class UserEditModal extends Component {
 
   render() {
     const { title, children, form, record } = this.props;
-    // eslint-disable-next-line camelcase
-    const { username, last_name, first_name, is_admin } = record;
+    const { name } = record;
     const { visible } = this.state;
     const formItemLayout = {
       labelCol: { span: 5 },
@@ -61,27 +60,11 @@ class UserEditModal extends Component {
       <span>
         <span onClick={this.handleShowModel}>{children}</span>
         <Modal title={title} visible={visible} onOk={this.handleOk} onCancel={this.handleHideModel}>
-          <FormItem {...formItemLayout} label="用户名">
-            {form.getFieldDecorator('username', {
-              initialValue: username,
-              rules: [{ required: true, message: '请输入用户名...' }],
+          <FormItem {...formItemLayout} label="班级名">
+            {form.getFieldDecorator('name', {
+              initialValue: name,
+              rules: [{ required: true, message: '请输入班级名...' }],
             })(<Input placeholder="请输入" />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="姓">
-            {form.getFieldDecorator('last_name', { initialValue: last_name })(
-              <Input placeholder="请输入" />
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="名">
-            {form.getFieldDecorator('first_name', { initialValue: first_name })(
-              <Input placeholder="请输入" />
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="管理员">
-            {form.getFieldDecorator('is_admin', {
-              initialValue: is_admin,
-              valuePropName: 'checked',
-            })(<Switch />)}
           </FormItem>
         </Modal>
       </span>
@@ -89,4 +72,4 @@ class UserEditModal extends Component {
   }
 }
 
-export default Form.create()(UserEditModal);
+export default Form.create()(ClassesEditModal);

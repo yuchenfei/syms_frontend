@@ -163,6 +163,10 @@ const menuData = [
         name: '教师管理',
         path: 'teacher',
       },
+      {
+        name: '班级管理',
+        path: 'classes',
+      },
     ],
   },
 ];

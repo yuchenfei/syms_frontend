@@ -19,7 +19,7 @@ import StandardTable from 'components/StandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './style.less';
-import UserModal from '../../components/User/UserModal';
+import UserModal from '../../components/Modal/UserModal';
 
 const FormItem = Form.Item;
 const { Option } = Select;

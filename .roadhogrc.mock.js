@@ -78,10 +78,14 @@ const proxy = {
   'POST /api/login': 'http://localhost:8080',
   'GET /api/logout': 'http://localhost:8080',
   'GET /api/currentUser': 'http://localhost:8080',
-  'GET /api/users': 'http://localhost:8080',
+  'GET /api/users/': 'http://localhost:8080',
   'POST /api/users/': 'http://localhost:8080',
   'PATCH /api/users/': 'http://localhost:8080',
   'DELETE /api/users/': 'http://localhost:8080',
+  'GET /api/classes/': 'http://localhost:8080',
+  'POST /api/classes/': 'http://localhost:8080',
+  'PATCH /api/classes/': 'http://localhost:8080',
+  'DELETE /api/classes/': 'http://localhost:8080',
 };
 
 export default (noProxy ? {} : delay(proxy, 1000));
