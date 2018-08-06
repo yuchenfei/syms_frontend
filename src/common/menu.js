@@ -173,6 +173,17 @@ const menuData = [
       },
     ],
   },
+  {
+    name: '实验管理',
+    icon: 'form',
+    path: 'experiment',
+    children: [
+      {
+        name: '实验管理',
+        path: 'experiment',
+      },
+    ],
+  },
 ];
 
 function formatter(data, parentPath = '/', parentAuthority) {
