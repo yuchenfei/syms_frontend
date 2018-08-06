@@ -8,7 +8,7 @@ import ClassesEditModal from '../../components/Modal/ClassesModal';
 
 @connect(({ classes, loading }) => ({
   classes,
-  loading: loading.models.user,
+  loading: loading.models.classes,
 }))
 @Form.create()
 export default class TableList extends PureComponent {

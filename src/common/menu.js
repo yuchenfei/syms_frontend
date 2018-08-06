@@ -167,6 +167,10 @@ const menuData = [
         name: '班级管理',
         path: 'classes',
       },
+      {
+        name: '课程管理',
+        path: 'course',
+      },
     ],
   },
 ];
