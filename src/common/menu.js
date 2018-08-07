@@ -178,8 +178,19 @@ const menuData = [
     ],
   },
   {
-    name: '实验管理',
+    name: '在线考试',
     icon: 'form',
+    path: 'exam',
+    children: [
+      {
+        name: '答题设置',
+        path: 'start',
+      },
+    ],
+  },
+  {
+    name: '实验管理',
+    icon: 'table',
     path: 'experiment',
     children: [
       {
