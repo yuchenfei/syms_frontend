@@ -168,6 +168,10 @@ const menuData = [
         path: 'classes',
       },
       {
+        name: '学生管理',
+        path: 'student',
+      },
+      {
         name: '课程管理',
         path: 'course',
       },
