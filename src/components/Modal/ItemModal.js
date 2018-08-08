@@ -61,7 +61,7 @@ class ItemEditModal extends Component {
         <span onClick={this.handleShowModel}>{children}</span>
         <Modal title={title} visible={visible} onOk={this.handleOk} onCancel={this.handleHideModel}>
           <FormItem {...formItemLayout} label="项目名称">
-            {form.getFieldDecorator('name', {
+            {form.getFieldDecorator('item', {
               initialValue: name,
               rules: [{ required: true, message: '请输入实验项目名称...' }],
             })(<Input placeholder="请输入" />)}

@@ -8,6 +8,7 @@ const { Option } = Select;
 class ExperimentModal extends Component {
   static propTypes = {
     title: PropTypes.string,
+    items: PropTypes.array,
     CourseList: PropTypes.array,
     record: PropTypes.object,
     onOk: PropTypes.func,
@@ -15,6 +16,7 @@ class ExperimentModal extends Component {
 
   static defaultProps = {
     title: '',
+    items: [],
     CourseList: [],
     record: {},
     onOk: () => {},
@@ -51,7 +53,7 @@ class ExperimentModal extends Component {
   };
 
   render() {
-    const { title, children, form, record, courseList } = this.props;
+    const { title, children, form, record, items, courseList } = this.props;
     const { name, describe, course, remark } = record;
     const { visible } = this.state;
     const formItemLayout = {
@@ -63,11 +65,17 @@ class ExperimentModal extends Component {
       <span>
         <span onClick={this.handleShowModel}>{children}</span>
         <Modal title={title} visible={visible} onOk={this.handleOk} onCancel={this.handleHideModel}>
-          <FormItem {...formItemLayout} label="实验名">
+          <FormItem {...formItemLayout} label="实验项目">
             {form.getFieldDecorator('name', {
               initialValue: name,
-              rules: [{ required: true, message: '请输入实验名...' }],
-            })(<Input placeholder="请输入" />)}
+              rules: [{ required: true, message: '请选择实验项目...' }],
+            })(
+              <Select placeholder="请选择" style={{ width: '100%' }}>
+                {items.map(i => {
+                  return <Option value={i.id}>{i.name}</Option>;
+                })}
+              </Select>
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="描述">
             {form.getFieldDecorator('describe', { initialValue: describe })(

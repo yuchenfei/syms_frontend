@@ -5,7 +5,6 @@ import {
   Col,
   Card,
   Form,
-  Input,
   Select,
   Icon,
   Button,
@@ -27,8 +26,9 @@ const getValue = obj =>
     .map(key => obj[key])
     .join(',');
 
-@connect(({ experiment, course, loading }) => ({
+@connect(({ experiment, item, course, loading }) => ({
   experiment,
+  item,
   course,
   loading: loading.models.experiment,
 }))
@@ -43,6 +43,9 @@ export default class TableList extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'experiment/fetch',
+    });
+    dispatch({
+      type: 'course/item',
     });
     dispatch({
       type: 'course/fetch',
@@ -172,7 +175,11 @@ export default class TableList extends PureComponent {
   };
 
   renderForm() {
-    const { form, course } = this.props;
+    const {
+      form,
+      item: { items },
+      course,
+    } = this.props;
     const courseList = course.data.list;
     const { getFieldDecorator } = form;
     return (
@@ -180,7 +187,13 @@ export default class TableList extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="实验名">
-              {getFieldDecorator('name')(<Input placeholder="请输入" />)}
+              {getFieldDecorator('name')(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  {items.map(i => {
+                    return <Option value={i.id}>{i.name}</Option>;
+                  })}
+                </Select>
+              )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
@@ -212,6 +225,7 @@ export default class TableList extends PureComponent {
   render() {
     const {
       experiment: { data },
+      item: { items },
       course,
       loading,
     } = this.props;
@@ -220,8 +234,14 @@ export default class TableList extends PureComponent {
 
     const columns = [
       {
-        title: '实验名',
-        dataIndex: 'name',
+        title: '实验项目',
+        dataIndex: 'item',
+        render(val) {
+          for (const i in items) {
+            if (items[i].id === val) return items[i].name;
+          }
+          return '';
+        },
       },
       {
         title: '描述',
@@ -229,13 +249,13 @@ export default class TableList extends PureComponent {
       },
       {
         title: '课程',
-        dataIndex: 'course',
-        render(val) {
-          for (const i in courseList) {
-            if (courseList[i].id === val) return courseList[i].name;
-          }
-          return '';
-        },
+        dataIndex: 'info',
+        // render(val) {
+        //   for (const i in courseList) {
+        //     if (courseList[i].id === val) return courseList[i].name;
+        //   }
+        //   return '';
+        // },
       },
       {
         title: '备注',
@@ -247,6 +267,7 @@ export default class TableList extends PureComponent {
           <Fragment>
             <ExperimentModal
               title="编辑实验"
+              items={items}
               courseList={courseList}
               record={record}
               onOk={this.handleEdit.bind(null, record.id)}
@@ -276,6 +297,7 @@ export default class TableList extends PureComponent {
             <div className={styles.tableListOperator}>
               <ExperimentModal
                 title="新建实验"
+                items={items}
                 courseList={courseList}
                 record={{}}
                 onOk={this.handleAdd}

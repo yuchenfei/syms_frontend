@@ -36,6 +36,10 @@ export default class BasicForms extends PureComponent {
       type: 'experiment/fetch',
       payload: { course: value },
     });
+    dispatch({
+      type: 'item/fetch',
+      payload: {},
+    });
   };
 
   handleSubmit = e => {
