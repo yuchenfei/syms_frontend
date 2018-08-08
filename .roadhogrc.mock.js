@@ -100,6 +100,10 @@ const proxy = {
   'DELETE /api/student/': 'http://localhost:8080',
   'GET /api/exam/': 'http://localhost:8080',
   'POST /api/exam/': 'http://localhost:8080',
+  'GET /api/item/': 'http://localhost:8080',
+  'POST /api/item/': 'http://localhost:8080',
+  'PATCH /api/item/': 'http://localhost:8080',
+  'DELETE /api/item/': 'http://localhost:8080',
 };
 
 export default (noProxy ? {} : delay(proxy, 1000));

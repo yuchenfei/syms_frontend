@@ -198,6 +198,10 @@ const menuData = [
     path: 'experiment',
     children: [
       {
+        name: '实验项目',
+        path: 'item',
+      },
+      {
         name: '实验管理',
         path: 'experiment',
       },
