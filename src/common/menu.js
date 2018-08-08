@@ -178,13 +178,17 @@ const menuData = [
     ],
   },
   {
-    name: '在线考试',
+    name: '在线答题',
     icon: 'form',
     path: 'exam',
     children: [
       {
         name: '答题设置',
         path: 'start',
+      },
+      {
+        name: '答题记录',
+        path: 'record',
       },
     ],
   },
