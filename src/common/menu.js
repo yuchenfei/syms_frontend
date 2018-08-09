@@ -207,6 +207,11 @@ const menuData = [
       },
     ],
   },
+  {
+    name: '思考题库',
+    icon: 'profile',
+    path: 'thinking',
+  },
 ];
 
 function formatter(data, parentPath = '/', parentAuthority) {

@@ -198,6 +198,11 @@ export const getRouterData = app => {
         import('../routes/Experiment/Experiment')
       ),
     },
+    '/thinking': {
+      component: dynamicWrapper(app, ['thinking', 'item'], () =>
+        import('../routes/Thinking/Thinking')
+      ),
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },
