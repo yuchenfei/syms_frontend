@@ -190,6 +190,10 @@ const menuData = [
         name: '答题记录',
         path: 'record',
       },
+      {
+        name: '题库管理',
+        path: 'question',
+      },
     ],
   },
   {

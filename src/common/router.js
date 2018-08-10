@@ -190,6 +190,9 @@ export const getRouterData = app => {
     '/exam/record': {
       component: dynamicWrapper(app, ['exam', 'experiment'], () => import('../routes/Exam/Record')),
     },
+    '/exam/question': {
+      component: dynamicWrapper(app, ['question', 'item'], () => import('../routes/Exam/Question')),
+    },
     '/experiment/item': {
       component: dynamicWrapper(app, ['item'], () => import('../routes/Experiment/Item')),
     },
