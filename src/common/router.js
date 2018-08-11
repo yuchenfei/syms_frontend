@@ -206,6 +206,11 @@ export const getRouterData = app => {
         import('../routes/Experiment/Feedback')
       ),
     },
+    '/experiment/grade': {
+      component: dynamicWrapper(app, ['grade', 'classes'], () =>
+        import('../routes/Experiment/Grade')
+      ),
+    },
     '/thinking': {
       component: dynamicWrapper(app, ['thinking', 'item'], () =>
         import('../routes/Thinking/Thinking')

@@ -213,6 +213,10 @@ const menuData = [
         name: '实验反馈',
         path: 'feedback',
       },
+      {
+        name: '成绩管理',
+        path: 'grade',
+      },
     ],
   },
   {
