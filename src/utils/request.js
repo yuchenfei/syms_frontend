@@ -25,12 +25,8 @@ function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  const errortext = codeMessage[response.status] || response.statusText;
-  notification.error({
-    message: `请求错误 ${response.status}: ${response.url}`,
-    description: errortext,
-  });
-  const error = new Error(errortext);
+  const error = new Error(codeMessage[response.status] || response.statusText);
+  error.url = response.url;
   error.name = response.status;
   error.response = response;
   throw error;
@@ -90,12 +86,17 @@ export default function request(url, options) {
     .catch(e => {
       const { dispatch } = store;
       const status = e.name;
+      const eUrl = e.url;
       if (status === 401) {
         dispatch({
           type: 'login/logout',
         });
         return;
       }
+      notification.error({
+        message: `请求错误 ${status}: ${eUrl}`,
+        description: e.message,
+      });
       if (status === 403) {
         dispatch(routerRedux.push('/exception/403'));
         return;

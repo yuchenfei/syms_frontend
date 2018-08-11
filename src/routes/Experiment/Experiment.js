@@ -45,7 +45,7 @@ export default class TableList extends PureComponent {
       type: 'experiment/fetch',
     });
     dispatch({
-      type: 'course/item',
+      type: 'item/fetch',
     });
     dispatch({
       type: 'course/fetch',
