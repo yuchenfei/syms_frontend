@@ -54,7 +54,7 @@ class ExperimentModal extends Component {
 
   render() {
     const { title, children, form, record, items, courseList } = this.props;
-    const { name, describe, course, remark } = record;
+    const { item, describe, course, remark } = record;
     const { visible } = this.state;
     const formItemLayout = {
       labelCol: { span: 5 },
@@ -66,8 +66,8 @@ class ExperimentModal extends Component {
         <span onClick={this.handleShowModel}>{children}</span>
         <Modal title={title} visible={visible} onOk={this.handleOk} onCancel={this.handleHideModel}>
           <FormItem {...formItemLayout} label="实验项目">
-            {form.getFieldDecorator('name', {
-              initialValue: name,
+            {form.getFieldDecorator('item', {
+              initialValue: item,
               rules: [{ required: true, message: '请选择实验项目...' }],
             })(
               <Select placeholder="请选择" style={{ width: '100%' }}>

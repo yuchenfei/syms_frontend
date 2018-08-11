@@ -209,6 +209,10 @@ const menuData = [
         name: '实验管理',
         path: 'experiment',
       },
+      {
+        name: '实验反馈',
+        path: 'feedback',
+      },
     ],
   },
   {

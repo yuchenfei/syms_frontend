@@ -146,11 +146,11 @@ export default class TableList extends PureComponent {
 
   handleAdd = fields => {
     const { dispatch } = this.props;
-    const { name, describe, course, remark } = fields;
+    const { item, describe, course, remark } = fields;
     dispatch({
       type: 'experiment/create',
       payload: {
-        name,
+        item,
         describe,
         course,
         remark,
