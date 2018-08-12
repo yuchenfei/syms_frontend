@@ -1,13 +1,14 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
+import config from '../config';
 
 export async function fetch(params) {
-  return request(`/api/exam/?${stringify(params)}`);
+  return request(`${config.domain}/api/exam/?${stringify(params)}`);
 }
 
 export async function create(values) {
-  return request('/api/exam/', {
+  return request(`${config.domain}/api/exam/`, {
     method: 'POST',
-    body: JSON.stringify(values),
+    body: values,
   });
 }

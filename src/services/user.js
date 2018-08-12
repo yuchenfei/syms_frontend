@@ -1,30 +1,31 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
+import config from '../config';
 
 export async function fetch(params) {
-  return request(`/api/users/?${stringify(params)}`);
+  return request(`${config.domain}/api/users/?${stringify(params)}`);
 }
 
 export async function fetchCurrent() {
-  return request('/api/currentUser');
+  return request(`${config.domain}/api/currentUser`);
 }
 
 export async function create(values) {
-  return request('/api/users/', {
+  return request(`${config.domain}/api/users/`, {
     method: 'POST',
-    body: JSON.stringify(values),
+    body: values,
   });
 }
 
 export async function patch(id, values) {
-  return request(`/api/users/${id}/`, {
+  return request(`${config.domain}/api/users/${id}/`, {
     method: 'PATCH',
-    body: JSON.stringify(values),
+    body: values,
   });
 }
 
 export async function remove(id) {
-  return request(`/api/users/${id}/`, {
+  return request(`${config.domain}/api/users/${id}/`, {
     method: 'DELETE',
   });
 }

@@ -1,5 +1,6 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
+import config from '../config';
 
 export async function queryProjectNotice() {
   return request('/api/project/notice');
@@ -80,12 +81,12 @@ export async function queryNotices() {
 
 // My Services
 export async function login(params) {
-  return request('/api/login', {
+  return request(`${config.domain}/api/login`, {
     method: 'POST',
     body: params,
   });
 }
 
 export async function logout() {
-  return request('/api/logout');
+  return request(`${config.domain}/api/logout`);
 }

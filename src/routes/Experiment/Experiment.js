@@ -187,7 +187,7 @@ export default class TableList extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="实验名">
-              {getFieldDecorator('name')(
+              {getFieldDecorator('item')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   {items.map(i => {
                     return <Option value={i.id}>{i.name}</Option>;
