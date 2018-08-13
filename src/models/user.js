@@ -1,6 +1,6 @@
-import * as routerRedux from 'react-router-redux';
+// import * as routerRedux from 'react-router-redux';
 import * as userService from '../services/user';
-import { setAuthority } from '../utils/authority';
+// import { setAuthority } from '../utils/authority';
 
 export default {
   namespace: 'user',
@@ -23,16 +23,16 @@ export default {
     },
     *fetchCurrent(_, { call, put }) {
       const response = yield call(userService.fetchCurrent);
-      const { currentUser, currentAuthority } = response;
+      const { currentUser } = response; // currentAuthority
       yield put({
         type: 'saveCurrentUser',
         payload: currentUser,
       });
-      if (currentAuthority) {
-        setAuthority(currentAuthority);
-        if (currentAuthority === 'admin') yield put(routerRedux.push('/info/teacher'));
-        if (currentAuthority === 'user') yield put(routerRedux.push('/exam/start'));
-      }
+      // if (currentAuthority) {
+      //   setAuthority(currentAuthority);
+      //   if (currentAuthority === 'admin') yield put(routerRedux.push('/info/teacher'));
+      //   if (currentAuthority === 'user') yield put(routerRedux.push('/exam/start'));
+      // }
     },
     *create({ payload: values }, { call, put }) {
       yield call(userService.create, values);
