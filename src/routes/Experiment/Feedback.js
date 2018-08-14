@@ -4,6 +4,7 @@ import { Card, Form, Button, List, Popconfirm, Row, Col, Select } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './style.less';
+import Gallery from '../../components/Gallery';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -123,6 +124,11 @@ export default class TableList extends PureComponent {
                       <a href="">删除</a>
                     </Popconfirm>,
                   ]}
+                  extra={
+                    <div style={{ width: '250px' }} inline-block>
+                      <Gallery images={i.images} />
+                    </div>
+                  }
                 >
                   <List.Item.Meta title={i.experimentName} description={i.content} />
                 </List.Item>
