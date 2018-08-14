@@ -10,6 +10,13 @@ export async function fetchCurrent() {
   return request(`${config.domain}/api/currentUser`);
 }
 
+export async function setting(values) {
+  return request(`${config.domain}/api/setting`, {
+    method: 'POST',
+    body: values,
+  });
+}
+
 export async function create(values) {
   return request(`${config.domain}/api/users/`, {
     method: 'POST',

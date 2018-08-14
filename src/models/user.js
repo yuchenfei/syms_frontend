@@ -1,4 +1,5 @@
 // import * as routerRedux from 'react-router-redux';
+import { message } from 'antd';
 import * as userService from '../services/user';
 // import { setAuthority } from '../utils/authority';
 
@@ -6,6 +7,7 @@ export default {
   namespace: 'user',
 
   state: {
+    status: '',
     data: {
       list: [],
       pagination: {},
@@ -34,6 +36,16 @@ export default {
       //   if (currentAuthority === 'user') yield put(routerRedux.push('/exam/start'));
       // }
     },
+    *setting({ payload: values }, { call, put }) {
+      const response = yield call(userService.setting, values);
+      yield put({ type: 'saveStatus', payload: response });
+      if (response.status === 'ok') {
+        message.success('修改成功');
+        yield put({ type: 'saveStatus', payload: { status: 'changed' } });
+        yield put({ type: 'user/fetchCurrent' });
+        yield put({ type: 'reload' });
+      }
+    },
     *create({ payload: values }, { call, put }) {
       yield call(userService.create, values);
       yield put({ type: 'reload' });
@@ -61,6 +73,12 @@ export default {
       return {
         ...state,
         data: { list: action.payload },
+      };
+    },
+    saveStatus(state, { payload }) {
+      return {
+        ...state,
+        status: payload.status || '',
       };
     },
     saveCurrentUser(state, action) {
