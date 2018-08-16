@@ -15,7 +15,7 @@ export default {
   effects: {
     *login({ payload }, { call, put }) {
       const response = yield call(login, payload);
-      const { currentAuthority } = response;
+      // const { currentAuthority } = response;
       yield put({
         type: 'changeLoginStatus',
         payload: response,
@@ -23,8 +23,9 @@ export default {
       // Login successfully
       if (response.status === 'ok') {
         reloadAuthorized();
-        if (currentAuthority === 'admin') yield put(routerRedux.push('/info/teacher'));
-        if (currentAuthority === 'user') yield put(routerRedux.push('/exam/start'));
+        yield put(routerRedux.push('/'));
+        // if (currentAuthority === 'admin') yield put(routerRedux.push('/info/teacher'));
+        // if (currentAuthority === 'user') yield put(routerRedux.push('/exam/start'));
         // const urlParams = new URL(window.location.href);
         // const params = getPageQuery();
         // let { redirect } = params;

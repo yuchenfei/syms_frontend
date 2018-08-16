@@ -18,6 +18,7 @@ import StandardTable from 'components/StandardTable';
 import fetch from 'dva/fetch';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
+import config from '../../config';
 import styles from './style.less';
 import ThinkingModal from './ThinkingModal';
 
@@ -145,7 +146,7 @@ export default class TableList extends PureComponent {
   handleAdd = formData => {
     const { dispatch } = this.props;
     // TODO:整合时替换相对地址
-    fetch('http://localhost:8080/api/thinking/', {
+    fetch(`${config.domain}/api/thinking/`, {
       credentials: 'include',
       method: 'POST',
       body: formData,
