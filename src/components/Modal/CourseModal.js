@@ -70,7 +70,10 @@ class CourseEditModal extends Component {
             })(<Input placeholder="请输入" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="班级">
-            {form.getFieldDecorator('classes', { initialValue: classes })(
+            {form.getFieldDecorator('classes', {
+              initialValue: classes,
+              rules: [{ required: true, message: '请选择班级...' }],
+            })(
               <Select placeholder="请选择" style={{ width: '100%' }}>
                 {classesList.map(i => {
                   return <Option value={i.id}>{i.name}</Option>;
@@ -79,7 +82,10 @@ class CourseEditModal extends Component {
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="学期">
-            {form.getFieldDecorator('term', { initialValue: term })(<Input placeholder="请输入" />)}
+            {form.getFieldDecorator('term', {
+              initialValue: term,
+              rules: [{ required: true, message: '请输入学期...' }],
+            })(<Input placeholder="请输入" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="状态">
             {form.getFieldDecorator('status', {
