@@ -117,6 +117,7 @@ export default class TableList extends PureComponent {
                 <List.Item
                   key={i.id}
                   actions={[
+                    <div>{i.studentXH}</div>,
                     <div>{i.studentName}</div>,
                     <div>{i.courseName}</div>,
                     <div>{i.datetime}</div>,
