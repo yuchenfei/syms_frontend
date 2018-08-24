@@ -100,14 +100,14 @@ export default function request(url, options) {
         });
         return;
       }
-      notification.error({
-        message: `请求错误 ${status}: ${eUrl}`,
-        description: e.message,
-      });
       if (status === 403) {
         dispatch(routerRedux.push('/exception/403'));
         return;
       }
+      notification.error({
+        message: `请求错误 ${status}: ${eUrl}`,
+        description: e.message,
+      });
       if (status <= 504 && status >= 500) {
         dispatch(routerRedux.push('/exception/500'));
         return;
