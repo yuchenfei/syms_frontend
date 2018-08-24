@@ -73,17 +73,18 @@ class ThinkingEditModal extends Component {
   render() {
     const { titleModal, children, form, record, items } = this.props;
     const { item, title } = record;
-    const { visible, uploading } = this.state;
+    const { visible, uploading, fileList } = this.state;
     const formItemLayout = {
       labelCol: { span: 5 },
       wrapperCol: { span: 15 },
     };
     const props = {
-      action: '//jsonplaceholder.typicode.com/posts/',
+      action: '',
+      fileList,
       onRemove: file => {
-        this.setState(({ fileList }) => {
-          const index = fileList.indexOf(file);
-          const newFileList = fileList.slice();
+        this.setState(({ fl }) => {
+          const index = fl.indexOf(file);
+          const newFileList = fl.slice();
           newFileList.splice(index, 1);
           return {
             fileList: newFileList,
@@ -91,14 +92,12 @@ class ThinkingEditModal extends Component {
         });
       },
       beforeUpload: file => {
-        this.setState(({ fileList }) => ({
-          fileList: [...fileList, file],
+        this.setState(() => ({
+          fileList: [file],
         }));
         return false;
       },
     };
-
-    const { fileList } = this.state;
 
     return (
       <span>

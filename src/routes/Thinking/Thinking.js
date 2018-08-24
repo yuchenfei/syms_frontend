@@ -249,7 +249,7 @@ export default class TableList extends PureComponent {
         render: (text, record) => (
           <Fragment>
             <ThinkingModal
-              title="编辑学生信息"
+              titleModal="编辑题目"
               items={items}
               record={record}
               onOk={this.handleEdit.bind(null, record.id)}
@@ -277,7 +277,12 @@ export default class TableList extends PureComponent {
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderForm()}</div>
             <div className={styles.tableListOperator}>
-              <ThinkingModal title="新建学生" items={items} record={{}} onOk={this.handleAdd}>
+              <ThinkingModal
+                titleModal="新建思考题"
+                items={items}
+                record={{}}
+                onOk={this.handleAdd}
+              >
                 <Button icon="plus" type="primary">
                   新建
                 </Button>
