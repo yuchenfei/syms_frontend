@@ -21,6 +21,7 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import config from '../../config';
 import styles from './style.less';
 import ThinkingModal from './ThinkingModal';
+import Picture from '../../components/Picture';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -243,6 +244,15 @@ export default class TableList extends PureComponent {
       {
         title: '题目',
         dataIndex: 'title',
+      },
+      {
+        title: '图片',
+        render(val) {
+          if (val.picture) {
+            return <Picture images={[{ src: val.picture }]} />;
+          }
+          return '无';
+        },
       },
       {
         title: '操作',
