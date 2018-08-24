@@ -4,6 +4,7 @@ import { Row, Col, Card, Form, Button, Popconfirm, Table, DatePicker, Divider } 
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './style.less';
+import config from '../../config';
 
 const FormItem = Form.Item;
 const getValue = obj =>
@@ -165,15 +166,18 @@ export default class TableList extends PureComponent {
       },
       {
         title: '操作',
-        render: (text, record) => (
-          <Fragment>
-            <Popconfirm title="确认删除？" onConfirm={this.handelDelete.bind(this, record.id)}>
-              <a href="">删除</a>
-            </Popconfirm>
-            <Divider type="vertical" />
-            <a href="">下载报告</a>
-          </Fragment>
-        ),
+        render: (text, record) => {
+          const url = `${config.domain}/api/exam/report/${record.id}`;
+          return (
+            <Fragment>
+              <Popconfirm title="确认删除？" onConfirm={this.handelDelete.bind(this, record.id)}>
+                <a href="">删除</a>
+              </Popconfirm>
+              {record.report && <Divider type="vertical" />}
+              {record.report && <a href={url}>下载报告</a>}
+            </Fragment>
+          );
+        },
       },
     ];
 
