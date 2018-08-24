@@ -103,9 +103,10 @@ export default class BasicForms extends PureComponent {
                 ],
               })(
                 <Select placeholder="请选择" onChange={this.handleClassesChange}>
-                  {classes.map(i => {
-                    return <Option value={i.id}>{i.name}</Option>;
-                  })}
+                  {classes &&
+                    classes.map(i => {
+                      return <Option value={i.id}>{i.name}</Option>;
+                    })}
                 </Select>
               )}
             </FormItem>
