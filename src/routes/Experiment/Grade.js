@@ -529,6 +529,16 @@ export default class TableList extends PureComponent {
                   </p>
                   <p className="ant-upload-text">点击或将文件拖拽到这里上传</p>
                   <p className="ant-upload-hint">支持扩展名：.xls .xlsx</p>
+                  <p className="ant-upload-hint">
+                    模板：
+                    <a
+                      href={`${config.domain}/api/grade/import_template?classes=${getFieldValue(
+                        'classes'
+                      )}`}
+                    >
+                      下载链接
+                    </a>
+                  </p>
                 </Dragger>
               </div>
             )}
