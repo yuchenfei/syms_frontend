@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Checkbox, Alert } from 'antd';
-import Login from 'components/Login';
+import Login from '../../components/Login';
 import styles from './Login.less';
 
 const { Tab, UserName, Password, Submit } = Login;
@@ -59,9 +59,6 @@ export default class LoginPage extends Component {
             <Checkbox checked={autoLogin} onChange={this.changeAutoLogin}>
               自动登录
             </Checkbox>
-            {/* <a style={{ float: 'right' }} href="">
-              忘记密码
-            </a> */}
           </div>
           <Submit loading={submitting}>登录</Submit>
         </Login>
