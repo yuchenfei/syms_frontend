@@ -1,5 +1,5 @@
-import React, { PureComponent, Fragment } from 'react';
-import { Table, Alert } from 'antd';
+import React, { PureComponent } from 'react'; // Fragment
+import { Table } from 'antd'; // Alert
 import styles from './index.less';
 
 function initTotalList(columns) {
@@ -19,7 +19,7 @@ class StandardTable extends PureComponent {
     const needTotalList = initTotalList(columns);
 
     this.state = {
-      selectedRowKeys: [],
+      // selectedRowKeys: [],
       needTotalList,
     };
   }
@@ -29,7 +29,7 @@ class StandardTable extends PureComponent {
     if (nextProps.selectedRows.length === 0) {
       const needTotalList = initTotalList(nextProps.columns);
       this.setState({
-        selectedRowKeys: [],
+        // selectedRowKeys: [],
         needTotalList,
       });
     }
@@ -52,7 +52,7 @@ class StandardTable extends PureComponent {
       onSelectRow(selectedRows);
     }
 
-    this.setState({ selectedRowKeys, needTotalList });
+    this.setState({ needTotalList }); // selectedRowKeys
   };
 
   handleTableChange = (pagination, filters, sorter) => {
@@ -65,7 +65,7 @@ class StandardTable extends PureComponent {
   };
 
   render() {
-    const { selectedRowKeys, needTotalList } = this.state;
+    // const { selectedRowKeys, needTotalList } = this.state;
     const {
       data: { list, pagination },
       loading,
@@ -79,43 +79,43 @@ class StandardTable extends PureComponent {
       ...pagination,
     };
 
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.handleRowSelectChange,
-      getCheckboxProps: record => ({
-        disabled: record.disabled,
-      }),
-    };
+    // const rowSelection = {
+    //   selectedRowKeys,
+    //   onChange: this.handleRowSelectChange,
+    //   getCheckboxProps: record => ({
+    //     disabled: record.disabled,
+    //   }),
+    // };
 
     return (
       <div className={styles.standardTable}>
-        <div className={styles.tableAlert}>
-          <Alert
-            message={
-              <Fragment>
-                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                {needTotalList.map(item => (
-                  <span style={{ marginLeft: 8 }} key={item.dataIndex}>
-                    {item.title}
-                    总计&nbsp;
-                    <span style={{ fontWeight: 600 }}>
-                      {item.render ? item.render(item.total) : item.total}
-                    </span>
-                  </span>
-                ))}
-                <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>
-                  清空
-                </a>
-              </Fragment>
-            }
-            type="info"
-            showIcon
-          />
-        </div>
+        {/* <div className={styles.tableAlert}> */}
+        {/* <Alert */}
+        {/* message={ */}
+        {/* <Fragment> */}
+        {/* 已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp; */}
+        {/* {needTotalList.map(item => ( */}
+        {/* <span style={{ marginLeft: 8 }} key={item.dataIndex}> */}
+        {/* {item.title} */}
+        {/* 总计&nbsp; */}
+        {/* <span style={{ fontWeight: 600 }}> */}
+        {/* {item.render ? item.render(item.total) : item.total} */}
+        {/* </span> */}
+        {/* </span> */}
+        {/* ))} */}
+        {/* <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}> */}
+        {/* 清空 */}
+        {/* </a> */}
+        {/* </Fragment> */}
+        {/* } */}
+        {/* type="info" */}
+        {/* showIcon */}
+        {/* /> */}
+        {/* </div> */}
         <Table
           loading={loading}
           rowKey={rowKey || 'key'}
-          rowSelection={rowSelection}
+          // rowSelection={rowSelection}
           dataSource={list}
           columns={columns}
           pagination={paginationProps}

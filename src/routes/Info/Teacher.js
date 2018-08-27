@@ -15,11 +15,10 @@ import {
   Divider,
   Popconfirm,
 } from 'antd';
-import StandardTable from 'components/StandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-
-import styles from './style.less';
+import StandardTable from '../../components/StandardTable';
 import UserModal from '../../components/Modal/UserModal';
+import styles from './style.less';
 
 const FormItem = Form.Item;
 const { Option } = Select;
