@@ -82,7 +82,11 @@ class StudentEditModal extends Component {
             })(
               <Select placeholder="请选择" style={{ width: '100%' }}>
                 {classesList.map(i => {
-                  return <Option value={i.id}>{i.name}</Option>;
+                  return (
+                    <Option key={i.id} value={i.id}>
+                      {i.name}
+                    </Option>
+                  );
                 })}
               </Select>
             )}

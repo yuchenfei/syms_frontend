@@ -99,7 +99,6 @@ export default class TableList extends PureComponent {
   };
 
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
-    console.log('change');
     const { dispatch } = this.props;
     const { formValues } = this.state;
     const { experiment } = formValues;
@@ -310,7 +309,11 @@ export default class TableList extends PureComponent {
               })(
                 <Select placeholder="请选择" onChange={this.handleClassesChange}>
                   {classes.map(i => {
-                    return <Option value={i.id}>{i.name}</Option>;
+                    return (
+                      <Option key={i.id} value={i.id}>
+                        {i.name}
+                      </Option>
+                    );
                   })}
                 </Select>
               )}
@@ -332,7 +335,11 @@ export default class TableList extends PureComponent {
                   onChange={this.handleCourseChange}
                 >
                   {courseList.map(i => {
-                    return <Option value={i.id}>{i.name}</Option>;
+                    return (
+                      <Option key={i.id} value={i.id}>
+                        {i.name}
+                      </Option>
+                    );
                   })}
                 </Select>
               )}
@@ -354,7 +361,11 @@ export default class TableList extends PureComponent {
                   onChange={this.handleExperimentChange}
                 >
                   {experimentList.map(i => {
-                    return <Option value={i.id}>{i.name}</Option>;
+                    return (
+                      <Option key={i.id} value={i.id}>
+                        {i.name}
+                      </Option>
+                    );
                   })}
                 </Select>
               )}

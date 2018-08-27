@@ -72,7 +72,11 @@ class ExperimentModal extends Component {
             })(
               <Select placeholder="请选择" style={{ width: '100%' }}>
                 {items.map(i => {
-                  return <Option value={i.id}>{i.name}</Option>;
+                  return (
+                    <Option key={i.id} value={i.id}>
+                      {i.name}
+                    </Option>
+                  );
                 })}
               </Select>
             )}
@@ -89,7 +93,11 @@ class ExperimentModal extends Component {
             })(
               <Select placeholder="请选择" style={{ width: '100%' }}>
                 {courseList.map(i => {
-                  return <Option value={i.id}>{i.name}</Option>;
+                  return (
+                    <Option key={i.id} value={i.id}>
+                      {i.name}
+                    </Option>
+                  );
                 })}
               </Select>
             )}

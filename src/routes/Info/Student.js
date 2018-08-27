@@ -238,7 +238,11 @@ export default class TableList extends PureComponent {
               {getFieldDecorator('classes')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   {classes.map(i => {
-                    return <Option value={i.id}>{i.name}</Option>;
+                    return (
+                      <Option key={i.id} value={i.id}>
+                        {i.name}
+                      </Option>
+                    );
                   })}
                 </Select>
               )}

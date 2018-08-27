@@ -105,7 +105,11 @@ export default class BasicForms extends PureComponent {
                 <Select placeholder="请选择" onChange={this.handleClassesChange}>
                   {classes &&
                     classes.map(i => {
-                      return <Option value={i.id}>{i.name}</Option>;
+                      return (
+                        <Option key={i.id} value={i.id}>
+                          {i.name}
+                        </Option>
+                      );
                     })}
                 </Select>
               )}
@@ -125,7 +129,11 @@ export default class BasicForms extends PureComponent {
                   onChange={this.handleCourseChange}
                 >
                   {courseList.map(i => {
-                    return <Option value={i.id}>{i.name}</Option>;
+                    return (
+                      <Option key={i.id} value={i.id}>
+                        {i.name}
+                      </Option>
+                    );
                   })}
                 </Select>
               )}
@@ -141,7 +149,11 @@ export default class BasicForms extends PureComponent {
               })(
                 <Select placeholder="请选择" disabled={!getFieldValue('course')}>
                   {experimentList.map(i => {
-                    return <Option value={i.id}>{i.name}</Option>;
+                    return (
+                      <Option key={i.id} value={i.id}>
+                        {i.name}
+                      </Option>
+                    );
                   })}
                 </Select>
               )}
