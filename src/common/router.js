@@ -120,6 +120,9 @@ export const getRouterData = app => {
         import('../routes/Thinking/Thinking')
       ),
     },
+    '/file': {
+      component: dynamicWrapper(app, ['file'], () => import('../routes/File/File')),
+    },
     '/user': {
       component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
     },

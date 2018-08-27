@@ -72,6 +72,11 @@ const menuData = [
     icon: 'profile',
     path: 'thinking',
   },
+  {
+    name: '发布文件',
+    icon: 'file',
+    path: 'file',
+  },
 ];
 
 function formatter(data, parentPath = '/', parentAuthority) {
