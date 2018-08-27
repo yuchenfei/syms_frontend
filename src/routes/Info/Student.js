@@ -13,15 +13,25 @@ import {
   Menu,
   Divider,
   Popconfirm,
+  Steps,
+  Upload,
+  message,
+  Alert,
+  Table,
 } from 'antd';
 import StandardTable from 'components/StandardTable';
+import Result from 'components/Result';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './style.less';
 import StudentModal from '../../components/Modal/StudentModal';
+import config from '../../config';
+import fetch from '../../../node_modules/dva/fetch';
 
 const FormItem = Form.Item;
 const { Option } = Select;
+const { Step } = Steps;
+const { Dragger } = Upload;
 const getValue = obj =>
   Object.keys(obj)
     .map(key => obj[key])
@@ -37,6 +47,8 @@ export default class TableList extends PureComponent {
   state = {
     selectedRows: [],
     formValues: {},
+    step: -1,
+    uploadData: {},
   };
 
   componentDidMount() {
@@ -135,6 +147,43 @@ export default class TableList extends PureComponent {
     }
   };
 
+  handleUploadButtonClick = () => {
+    const { step } = this.state;
+    if (step < 0) {
+      this.setState({
+        step: 0,
+      });
+    } else {
+      this.setState({
+        step: -1,
+        uploadData: {},
+      });
+    }
+  };
+
+  handleImportConfirmClick = () => {
+    const { form } = this.props;
+    const { uploadData } = this.state;
+    const { getFieldValue } = form;
+    const { data } = uploadData;
+    const classes = getFieldValue('classes_import');
+    fetch(`${config.domain}/api/student/import`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      credentials: 'include',
+      method: 'POST',
+      body: JSON.stringify({ classes, data }),
+    }).then(response => {
+      if (response.status === 200) {
+        this.setState({
+          step: 2,
+        });
+      }
+    });
+  };
+
   handleSelectRows = rows => {
     this.setState({
       selectedRows: rows,
@@ -212,11 +261,25 @@ export default class TableList extends PureComponent {
 
   render() {
     const {
+      form,
       student: { data },
       classes: { classes },
       loading,
     } = this.props;
-    const { selectedRows } = this.state;
+    const { selectedRows, step, uploadData } = this.state;
+    const { getFieldDecorator, getFieldValue } = form;
+    const { warning } = uploadData;
+
+    let warningMessage = '';
+    if (warning) {
+      warningMessage = warning.join();
+      warningMessage = `${warningMessage} 已存在，将不会导入`;
+    }
+
+    const formItemLayout = {
+      labelCol: { span: 5 },
+      wrapperCol: { span: 15 },
+    };
 
     const columns = [
       {
@@ -264,6 +327,32 @@ export default class TableList extends PureComponent {
       </Menu>
     );
 
+    const props = {
+      name: 'file',
+      accept: '.xls,.xlsx',
+      action: `${config.domain}/api/student/import`,
+      data: { classes: getFieldValue('classes_import') },
+      withCredentials: true,
+      onChange: i => {
+        const { file } = i;
+        const { name, status, response } = file;
+        if (status === 'done') {
+          if (response.status === 'ok') {
+            message.success(`${name} 上传成功！`);
+            this.setState({
+              uploadData: response,
+              step: 1,
+            });
+          }
+          if (response.status === 'error') {
+            message.error(`${name} 文件格式出错！`);
+          }
+        } else if (status === 'error') {
+          message.error(`${name} 上传失败！`);
+        }
+      },
+    };
+
     return (
       <PageHeaderLayout title="学生管理">
         <Card bordered={false}>
@@ -290,16 +379,93 @@ export default class TableList extends PureComponent {
                   </Dropdown>
                 </span>
               )}
+              <Button icon="cloud-upload-o" type="primary" onClick={this.handleUploadButtonClick}>
+                {step < 0 && '批量上传'}
+                {step >= 0 && '返回'}
+              </Button>
             </div>
-            <StandardTable
-              selectedRows={selectedRows}
-              loading={loading}
-              data={data}
-              columns={columns}
-              rowKey="id"
-              onSelectRow={this.handleSelectRows}
-              onChange={this.handleStandardTableChange}
-            />
+            {step < 0 && (
+              <StandardTable
+                selectedRows={selectedRows}
+                loading={loading}
+                data={data}
+                columns={columns}
+                rowKey="id"
+                onSelectRow={this.handleSelectRows}
+                onChange={this.handleStandardTableChange}
+              />
+            )}
+            {step >= 0 && (
+              <div>
+                <Steps current={step} style={{ maxWidth: '750px', margin: '16px auto' }}>
+                  <Step title="上传文件" />
+                  <Step title="预览信息" />
+                  <Step title="完成导入" />
+                </Steps>
+                <Form
+                  layout="horizontal"
+                  hideRequiredMark
+                  style={{ maxWidth: '750px', margin: '16px auto' }}
+                >
+                  <FormItem label="班级" {...formItemLayout}>
+                    {getFieldDecorator('classes_import')(
+                      <Select
+                        placeholder="请选择导入班级"
+                        disabled={step > 0}
+                        onChange={this.handleClassesChange}
+                      >
+                        {classes &&
+                          classes.map(i => {
+                            return (
+                              <Option key={i.id} value={i.id}>
+                                {i.name}
+                              </Option>
+                            );
+                          })}
+                      </Select>
+                    )}
+                  </FormItem>
+                </Form>
+              </div>
+            )}
+            {step === 0 && (
+              <div style={{ margin: '40px auto 0', maxWidth: '500px' }}>
+                <Dragger disabled={!getFieldValue('classes_import')} {...props}>
+                  <p className="ant-upload-drag-icon">
+                    <Icon type="inbox" />
+                  </p>
+                  <p className="ant-upload-text">点击或将文件拖拽到这里上传</p>
+                  <p className="ant-upload-hint">支持扩展名：.xls .xlsx</p>
+                </Dragger>
+              </div>
+            )}
+            {step === 1 && (
+              <div>
+                {warning && warning.length > 0 && <Alert message={warningMessage} type="warning" />}
+                <Table
+                  dataSource={uploadData.data}
+                  columns={[
+                    {
+                      title: '学号',
+                      dataIndex: 'xh',
+                    },
+                    {
+                      title: '姓名',
+                      dataIndex: 'name',
+                    },
+                  ]}
+                />
+                <Button
+                  type="primary"
+                  onClick={this.handleImportConfirmClick}
+                  disabled={uploadData.data && uploadData.data.length < 1}
+                  style={{ marginTop: '12px' }}
+                >
+                  确认
+                </Button>
+              </div>
+            )}
+            {step === 2 && <Result type="success" title="导入成功" className={styles.result} />}
           </div>
         </Card>
       </PageHeaderLayout>

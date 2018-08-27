@@ -445,9 +445,6 @@ export default class TableList extends PureComponent {
       onChange: i => {
         const { file } = i;
         const { name, status, response } = file;
-        // if (status !== 'uploading') {
-        //   console.log(i.file, i.fileList);
-        // }
         if (status === 'done') {
           if (response.status === 'ok') {
             message.success(`${name} 上传成功！`);
@@ -455,6 +452,9 @@ export default class TableList extends PureComponent {
               uploadData: response,
               step: 1,
             });
+          }
+          if (response.status === 'error') {
+            message.error(`${name} 文件格式出错！`);
           }
         } else if (status === 'error') {
           message.error(`${name} 上传失败！`);
@@ -556,7 +556,12 @@ export default class TableList extends PureComponent {
                     },
                   ]}
                 />
-                <Button type="primary" onClick={this.handleImportConfirmClick}>
+                <Button
+                  type="primary"
+                  onClick={this.handleImportConfirmClick}
+                  disabled={uploadData.data && uploadData.data.length < 1}
+                  style={{ marginTop: '12px' }}
+                >
                   确认
                 </Button>
               </div>
