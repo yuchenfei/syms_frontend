@@ -12,13 +12,10 @@ import {
   Menu,
   Divider,
   Popconfirm,
-  message,
 } from 'antd';
 import StandardTable from 'components/StandardTable';
-import fetch from 'dva/fetch';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
-import config from '../../config';
 import styles from './style.less';
 import ThinkingModal from './ThinkingModal';
 import Picture from '../../components/Picture';
@@ -146,33 +143,18 @@ export default class TableList extends PureComponent {
 
   handleAdd = formData => {
     const { dispatch } = this.props;
-    // TODO:整合时替换相对地址
-    fetch(`${config.domain}/api/thinking/`, {
-      credentials: 'include',
-      method: 'POST',
-      body: formData,
-    })
-      .then(response => {
-        console.log(response);
-        message.success('创建成功');
-        dispatch({ type: 'thinking/reload' });
-      })
-      .catch(e => {
-        console.log('parsing failed', e);
-        dispatch({ type: 'thinking/reload' });
-      });
+    dispatch({
+      type: 'thinking/create',
+      payload: formData,
+    });
   };
 
   handleEdit = (id, formData) => {
     const { dispatch } = this.props;
-    const url = `http://localhost:8080/api/thinking/${id}/`;
-    fetch(url, {
-      credentials: 'include',
-      method: 'PATCH',
-      body: formData,
+    dispatch({
+      type: 'thinking/patch',
+      payload: { id, formData },
     });
-    message.success('修改成功');
-    dispatch({ type: 'thinking/reload' });
   };
 
   handelDelete = id => {

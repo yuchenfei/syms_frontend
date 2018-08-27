@@ -18,6 +18,19 @@ export default {
         payload: response,
       });
     },
+    *create({ payload: values }, { call, put }) {
+      yield call(thinkingService.create, values);
+      yield put({ type: 'reload' });
+    },
+    *patch(
+      {
+        payload: { id, formData },
+      },
+      { call, put }
+    ) {
+      yield call(thinkingService.patch, id, formData);
+      yield put({ type: 'reload' });
+    },
     *remove({ payload: id }, { call, put }) {
       yield call(thinkingService.remove, id);
       yield put({ type: 'reload' });
