@@ -18,12 +18,11 @@ import {
   Table,
   Alert,
 } from 'antd';
-import StandardTable from 'components/StandardTable';
-import Result from 'components/Result';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-
-import styles from './style.less';
+import StandardTable from '../../components/StandardTable';
+import Result from '../../components/Result';
 import GradeModal from '../../components/Modal/GradeModal';
+import styles from './style.less';
 import config from '../../config';
 import fetch from '../../../node_modules/dva/fetch';
 

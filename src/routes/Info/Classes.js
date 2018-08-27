@@ -2,9 +2,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Card, Form, Button, List, Popconfirm } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-
-import styles from './style.less';
 import ClassesEditModal from '../../components/Modal/ClassesModal';
+import styles from './style.less';
 
 @connect(({ classes, loading }) => ({
   classes,

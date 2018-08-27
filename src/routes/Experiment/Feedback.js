@@ -2,9 +2,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Card, Form, Button, List, Popconfirm, Row, Col, Select } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-
-import styles from './style.less';
 import Gallery from '../../components/Gallery';
+import styles from './style.less';
 
 const FormItem = Form.Item;
 const { Option } = Select;

@@ -2,9 +2,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Card, Form, Button, List, Popconfirm } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-
-import styles from './style.less';
 import ItemModal from '../../components/Modal/ItemModal';
+import styles from './style.less';
 
 @connect(({ item, loading }) => ({
   item,

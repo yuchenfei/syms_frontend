@@ -2,9 +2,8 @@ import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Form, Button, Popconfirm, Table, DatePicker, Divider } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-
-import styles from './style.less';
 import config from '../../config';
+import styles from './style.less';
 
 const FormItem = Form.Item;
 const getValue = obj =>
