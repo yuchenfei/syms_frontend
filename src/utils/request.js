@@ -83,12 +83,15 @@ export default function request(url, options) {
         message.success('删除成功');
         return response.text();
       }
-      if (response.errMsg) {
+      return response.json();
+    })
+    .then(json => {
+      if (json.status === 'error') {
         // 有错误消息时直接提示
-        message.error(response.errMsg);
+        message.error(json.errMsg);
         return;
       }
-      return response.json();
+      return json;
     })
     .catch(e => {
       const { dispatch } = store;
