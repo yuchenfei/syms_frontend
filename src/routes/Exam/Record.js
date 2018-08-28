@@ -76,7 +76,7 @@ export default class TableList extends PureComponent {
 
       dispatch({
         type: 'exam/fetch',
-        payload: { date: values.date.format('YYYY-MM-DD') },
+        payload: { date: values.date ? values.date.format('YYYY-MM-DD') : '' },
       });
     });
   };
