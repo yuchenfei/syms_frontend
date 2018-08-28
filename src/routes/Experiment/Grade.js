@@ -234,6 +234,8 @@ export default class TableList extends PureComponent {
         this.setState({
           step: 2,
         });
+      } else {
+        message.error('导入出错！');
       }
     });
   };
