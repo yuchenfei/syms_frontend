@@ -77,13 +77,10 @@ class ThinkingEditModal extends Component {
     const props = {
       action: '',
       fileList,
-      onRemove: file => {
-        this.setState(({ fl }) => {
-          const index = fl.indexOf(file);
-          const newFileList = fl.slice();
-          newFileList.splice(index, 1);
+      onRemove: () => {
+        this.setState(() => {
           return {
-            fileList: newFileList,
+            fileList: [],
           };
         });
       },
