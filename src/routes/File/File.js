@@ -204,7 +204,11 @@ export default class TableList extends PureComponent {
         title: '文件',
         render(val) {
           if (val.file) {
-            return <a href={val.file}>下载</a>;
+            return (
+              <a href={val.file} target="_blank" rel="noopener noreferrer">
+                下载
+              </a>
+            );
           }
           return '无';
         },
