@@ -95,7 +95,7 @@ class ExperimentModal extends Component {
                 {courseList.map(i => {
                   return (
                     <Option key={i.id} value={i.id}>
-                      {i.name}
+                      {i.info}
                     </Option>
                   );
                 })}
