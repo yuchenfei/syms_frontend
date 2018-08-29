@@ -17,6 +17,7 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import StandardTable from '../../components/StandardTable';
 import FileModal from '../../components/Modal/FileModal';
 import styles from './style.less';
+import Picture from '../../components/Picture';
 
 const FormItem = Form.Item;
 const getValue = obj =>
@@ -204,6 +205,15 @@ export default class TableList extends PureComponent {
         title: '文件',
         render(val) {
           if (val.file) {
+            const url = val.file;
+            const fileName = url.substring(url.lastIndexOf('/') + 1);
+            if (fileName.indexOf('.') > 0) {
+              const postfix = fileName.substring(fileName.lastIndexOf('.'));
+              const re = new RegExp('(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG|.gif|.GIF)$');
+              if (re.test(postfix)) {
+                return <Picture images={[{ src: val.file }]} />;
+              }
+            }
             return (
               <a href={val.file} target="_blank" rel="noopener noreferrer">
                 下载
