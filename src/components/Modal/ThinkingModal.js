@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Modal, Select, Upload, Button, Icon } from 'antd';
+import { Form, Input, Modal, Select, Upload, Button, Icon, message } from 'antd';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -81,17 +81,20 @@ class ThinkingEditModal extends Component {
     const props = {
       action: '',
       fileList,
-      onRemove: file => {
-        this.setState(({ fl }) => {
-          const index = fl.indexOf(file);
-          const newFileList = fl.slice();
-          newFileList.splice(index, 1);
+      accept: 'image/*',
+      onRemove: () => {
+        this.setState(() => {
           return {
-            fileList: newFileList,
+            fileList: [],
           };
         });
       },
       beforeUpload: file => {
+        const isImage = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isImage) {
+          message.error('所选文件非图片格式！');
+          return false;
+        }
         this.setState(() => ({
           fileList: [file],
         }));
