@@ -398,7 +398,7 @@ export default class TableList extends PureComponent {
     }
 
     let warningMessage = '';
-    if (warning) {
+    if (warning && warning.length > 0) {
       warningMessage = warning.join();
       warningMessage = `${warningMessage} 的成绩已存在，将不会导入`;
     }
@@ -556,7 +556,7 @@ export default class TableList extends PureComponent {
             )}
             {step === 1 && (
               <div>
-                {warning && <Alert message={warningMessage} type="warning" />}
+                {warning && warning.length > 0 && <Alert message={warningMessage} type="warning" />}
                 <Table
                   dataSource={uploadData.data}
                   columns={[

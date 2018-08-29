@@ -274,7 +274,7 @@ export default class TableList extends PureComponent {
     const { warning } = uploadData;
 
     let warningMessage = '';
-    if (warning) {
+    if (warning && warning.length > 0) {
       warningMessage = warning.join();
       warningMessage = `${warningMessage} 已存在，将不会导入`;
     }
