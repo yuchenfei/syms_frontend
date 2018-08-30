@@ -674,7 +674,7 @@ export default class TableList extends PureComponent {
                     }
                     contentHeight={170}
                   >
-                    <MiniBar data={gradeAll} />
+                    <MiniBar data={gradeAll} average={average} />
                   </ChartCard>
                 </Col>
                 <Col {...colProps}>
