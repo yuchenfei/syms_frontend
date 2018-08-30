@@ -46,6 +46,10 @@ const menuData = [
         name: '成绩管理',
         path: 'grade',
       },
+      {
+        name: '课程成绩',
+        path: 'course_grade',
+      },
     ],
   },
   {

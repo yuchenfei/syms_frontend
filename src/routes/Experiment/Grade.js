@@ -344,7 +344,7 @@ export default class TableList extends PureComponent {
     const experimentList = experiment.data.list;
     const { getFieldDecorator, getFieldValue } = form;
     return (
-      <Form hideRequiredMark style={{ marginTop: 8 }}>
+      <Form style={{ marginTop: 8 }}>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="班级">

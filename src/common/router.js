@@ -92,6 +92,11 @@ export const getRouterData = app => {
         import('../routes/Experiment/Grade')
       ),
     },
+    '/experiment/course_grade': {
+      component: dynamicWrapper(app, ['classes', 'course', 'courseGrade'], () =>
+        import('../routes/Experiment/CourseGrade')
+      ),
+    },
     '/exam/start': {
       component: dynamicWrapper(app, ['classes', 'exam'], () => import('../routes/Exam/Start')),
     },
