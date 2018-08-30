@@ -35,6 +35,7 @@ export default class TableList extends PureComponent {
   handleTableChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
     const { formValues } = this.state;
+    const { date } = formValues;
 
     const filters = Object.keys(filtersArg).reduce((obj, key) => {
       const newObj = { ...obj };
@@ -45,7 +46,7 @@ export default class TableList extends PureComponent {
     const params = {
       currentPage: pagination.current,
       pageSize: pagination.pageSize,
-      ...formValues,
+      date: date ? date.format('YYYY-MM-DD') : '',
       ...filters,
     };
     if (sorter.field) {
