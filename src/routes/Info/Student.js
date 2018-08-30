@@ -368,7 +368,7 @@ export default class TableList extends PureComponent {
                 record={{}}
                 onOk={this.handleAdd}
               >
-                <Button icon="plus" type="primary">
+                <Button icon="plus" type="primary" disabled={step >= 0}>
                   新建
                 </Button>
               </StudentModal>
