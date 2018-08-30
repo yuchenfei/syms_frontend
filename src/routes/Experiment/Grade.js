@@ -18,6 +18,7 @@ import {
   Table,
   Alert,
 } from 'antd';
+import { ChartCard, Bar, Field, MiniBar } from '../../components/Charts';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import StandardTable from '../../components/StandardTable';
 import Result from '../../components/Result';
@@ -50,6 +51,7 @@ export default class TableList extends PureComponent {
     formValues: {},
     step: -1,
     uploadData: {},
+    analyseData: {},
   };
 
   componentDidMount() {
@@ -128,6 +130,10 @@ export default class TableList extends PureComponent {
     const { resetFields } = form;
     resetFields('course');
     resetFields('experiment');
+    this.setState({
+      step: -1,
+      uploadData: {},
+    });
     dispatch({
       type: 'course/fetch',
       payload: { classes: value },
@@ -142,6 +148,10 @@ export default class TableList extends PureComponent {
     const { form, dispatch } = this.props;
     const { resetFields } = form;
     resetFields('experiment');
+    this.setState({
+      step: -1,
+      uploadData: {},
+    });
     dispatch({
       type: 'experiment/fetch',
       payload: { course: value },
@@ -221,6 +231,60 @@ export default class TableList extends PureComponent {
       } else {
         message.error('导入出错！');
       }
+    });
+  };
+
+  handleAnalyseButtonClick = () => {
+    const {
+      grade: { data },
+    } = this.props;
+    const { list } = data;
+    const { step } = this.state;
+    // 分析数据
+    const gradeAll = [];
+    const gradeRange = [
+      { x: '60以下', y: 0 },
+      { x: '60-69', y: 0 },
+      { x: '70-79', y: 0 },
+      { x: '80-89', y: 0 },
+      { x: '90-100', y: 0 },
+    ];
+    let average = 0;
+    let maxIndex = 0;
+    let minIndex = 0;
+    list.forEach((item, index) => {
+      gradeAll.push({ x: item.studentName, y: item.grade });
+      average += item.grade;
+      if (item.grade > list[maxIndex].grade) maxIndex = index;
+      if (item.grade < list[minIndex].grade) minIndex = index;
+      switch (Math.floor(item.grade / 10)) {
+        case 10:
+        case 9:
+          gradeRange[4].y += 1;
+          break;
+        case 8:
+          gradeRange[3].y += 1;
+          break;
+        case 7:
+          gradeRange[2].y += 1;
+          break;
+        case 6:
+          gradeRange[1].y += 1;
+          break;
+        default:
+          gradeRange[0].y += 1;
+      }
+    });
+    average /= list.length;
+
+    // 跳转逻辑
+    let stepTo = -1;
+    if (step < 0) stepTo = 3;
+    else stepTo = -1;
+    // 写入State
+    this.setState({
+      step: stepTo,
+      analyseData: { average, gradeAll, gradeRange, maxIndex, minIndex },
     });
   };
 
@@ -368,10 +432,12 @@ export default class TableList extends PureComponent {
       student,
       loading,
     } = this.props;
-    const { selectedRows, step, uploadData } = this.state;
+    const { selectedRows, step, uploadData, analyseData } = this.state;
     const { getFieldValue } = form;
+    const { list } = data;
     const studentList = student.data.list;
     const { warning } = uploadData;
+    const { average, gradeAll, gradeRange, maxIndex, minIndex } = analyseData;
 
     let info = '';
     if (getFieldValue('experiment')) {
@@ -458,6 +524,15 @@ export default class TableList extends PureComponent {
       },
     };
 
+    const colProps = {
+      xs: 24,
+      sm: 24,
+      md: 24,
+      lg: 12,
+      xl: 12,
+      style: { marginBottom: 24 },
+    };
+
     return (
       <PageHeaderLayout title="成绩管理" content="请先选择实验">
         <Card bordered={false}>
@@ -493,10 +568,19 @@ export default class TableList extends PureComponent {
                 icon="cloud-upload-o"
                 type="primary"
                 onClick={this.handleUploadButtonClick}
-                disabled={!getFieldValue('experiment')}
+                disabled={!getFieldValue('experiment') || step === 3}
               >
-                {step < 0 && '批量上传'}
-                {step >= 0 && '返回'}
+                {step >= 0 && step < 3 && '返回'}
+                {(step < 0 || step === 3) && '批量上传'}
+              </Button>
+              <Button
+                icon="area-chart"
+                type="primary"
+                onClick={this.handleAnalyseButtonClick}
+                disabled={!getFieldValue('experiment') || (step >= 0 && step < 3)}
+              >
+                {step === 3 && '返回'}
+                {step < 3 && '成绩分析'}
               </Button>
             </div>
             {step < 0 && (
@@ -510,13 +594,14 @@ export default class TableList extends PureComponent {
                 onChange={this.handleStandardTableChange}
               />
             )}
-            {step >= 0 && (
-              <Steps current={step} style={{ maxWidth: '750px', margin: '16px auto' }}>
-                <Step title="上传文件" />
-                <Step title="预览信息" />
-                <Step title="完成导入" />
-              </Steps>
-            )}
+            {step >= 0 &&
+              step < 3 && (
+                <Steps current={step} style={{ maxWidth: '750px', margin: '16px auto' }}>
+                  <Step title="上传文件" />
+                  <Step title="预览信息" />
+                  <Step title="完成导入" />
+                </Steps>
+              )}
             {step === 0 && (
               <div style={{ margin: '40px auto 0', maxWidth: '500px' }}>
                 <Dragger {...props}>
@@ -573,6 +658,31 @@ export default class TableList extends PureComponent {
               </div>
             )}
             {step === 2 && <Result type="success" title="导入成功" className={styles.result} />}
+            {step === 3 && (
+              <Row>
+                <Col {...colProps}>
+                  <ChartCard
+                    bordered={false}
+                    title="平均分"
+                    total={average}
+                    footer={
+                      <Field
+                        label="最高分/最低分:"
+                        value={`${list[maxIndex].grade}(${list[maxIndex].studentName}) / ${
+                          list[minIndex].grade
+                        }(${list[minIndex].studentName})`}
+                      />
+                    }
+                    contentHeight={170}
+                  >
+                    <MiniBar data={gradeAll} />
+                  </ChartCard>
+                </Col>
+                <Col {...colProps}>
+                  <Bar height={300} title="成绩分布" data={gradeRange} />
+                </Col>
+              </Row>
+            )}
           </div>
         </Card>
       </PageHeaderLayout>
