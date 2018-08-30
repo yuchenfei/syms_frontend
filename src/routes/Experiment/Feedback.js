@@ -8,9 +8,10 @@ import styles from './style.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 
-@connect(({ feedback, item, loading }) => ({
+@connect(({ feedback, item, classes, loading }) => ({
   feedback,
   item,
+  classes,
   loading: loading.models.feedback,
 }))
 @Form.create()
@@ -22,6 +23,9 @@ export default class TableList extends PureComponent {
     });
     dispatch({
       type: 'item/fetch',
+    });
+    dispatch({
+      type: 'classes/fetch',
     });
   }
 
@@ -64,6 +68,7 @@ export default class TableList extends PureComponent {
   renderForm() {
     const {
       form,
+      classes: { classes },
       item: { items },
     } = this.props;
     const { getFieldDecorator } = form;
@@ -75,6 +80,21 @@ export default class TableList extends PureComponent {
               {getFieldDecorator('item')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   {items.map(i => {
+                    return (
+                      <Option key={i.id} value={i.id}>
+                        {i.name}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
+            <FormItem label="班级">
+              {getFieldDecorator('classes')(
+                <Select placeholder="请选择" onChange={this.handleClassesChange}>
+                  {classes.map(i => {
                     return (
                       <Option key={i.id} value={i.id}>
                         {i.name}
