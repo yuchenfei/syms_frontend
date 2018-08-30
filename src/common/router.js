@@ -74,6 +74,24 @@ export const getRouterData = app => {
     '/': {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
     },
+    '/experiment/item': {
+      component: dynamicWrapper(app, ['item'], () => import('../routes/Experiment/Item')),
+    },
+    '/experiment/experiment': {
+      component: dynamicWrapper(app, ['experiment', 'item', 'classes'], () =>
+        import('../routes/Experiment/Experiment')
+      ),
+    },
+    '/experiment/feedback': {
+      component: dynamicWrapper(app, ['feedback', 'item', 'classes'], () =>
+        import('../routes/Experiment/Feedback')
+      ),
+    },
+    '/experiment/grade': {
+      component: dynamicWrapper(app, ['grade', 'classes'], () =>
+        import('../routes/Experiment/Grade')
+      ),
+    },
     '/exam/start': {
       component: dynamicWrapper(app, ['classes', 'exam'], () => import('../routes/Exam/Start')),
     },
@@ -95,24 +113,6 @@ export const getRouterData = app => {
     '/info/student': {
       component: dynamicWrapper(app, ['student', 'classes'], () =>
         import('../routes/Info/Student')
-      ),
-    },
-    '/experiment/item': {
-      component: dynamicWrapper(app, ['item'], () => import('../routes/Experiment/Item')),
-    },
-    '/experiment/experiment': {
-      component: dynamicWrapper(app, ['experiment', 'item', 'classes'], () =>
-        import('../routes/Experiment/Experiment')
-      ),
-    },
-    '/experiment/feedback': {
-      component: dynamicWrapper(app, ['feedback', 'item'], () =>
-        import('../routes/Experiment/Feedback')
-      ),
-    },
-    '/experiment/grade': {
-      component: dynamicWrapper(app, ['grade', 'classes'], () =>
-        import('../routes/Experiment/Grade')
       ),
     },
     '/thinking': {

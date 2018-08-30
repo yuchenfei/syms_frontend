@@ -26,25 +26,6 @@ const menuData = [
     ],
   },
   {
-    name: '在线答题',
-    icon: 'form',
-    path: 'exam',
-    children: [
-      {
-        name: '答题设置',
-        path: 'start',
-      },
-      {
-        name: '答题记录',
-        path: 'record',
-      },
-      {
-        name: '题库管理',
-        path: 'question',
-      },
-    ],
-  },
-  {
     name: '实验管理',
     icon: 'table',
     path: 'experiment',
@@ -64,6 +45,25 @@ const menuData = [
       {
         name: '成绩管理',
         path: 'grade',
+      },
+    ],
+  },
+  {
+    name: '在线答题',
+    icon: 'form',
+    path: 'exam',
+    children: [
+      {
+        name: '答题设置',
+        path: 'start',
+      },
+      {
+        name: '答题记录',
+        path: 'record',
+      },
+      {
+        name: '题库管理',
+        path: 'question',
       },
     ],
   },

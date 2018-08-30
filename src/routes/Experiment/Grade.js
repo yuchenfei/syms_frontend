@@ -530,7 +530,6 @@ export default class TableList extends PureComponent {
       md: 24,
       lg: 12,
       xl: 12,
-      style: { marginBottom: 24 },
     };
 
     return (

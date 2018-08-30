@@ -133,6 +133,15 @@ export default class TableList extends PureComponent {
       loading,
     } = this.props;
 
+    const colProps = {
+      xs: 24,
+      sm: 24,
+      md: 24,
+      lg: 12,
+      xl: 12,
+      style: { marginBottom: 12 },
+    };
+
     return (
       <PageHeaderLayout title="题库管理">
         <Card bordered={false}>
@@ -172,18 +181,16 @@ export default class TableList extends PureComponent {
                 >
                   <List.Item.Meta title={question.title} />
                   <Row style={{ marginBottom: 5 }}>
-                    <Col span={12}>
+                    <Col {...colProps}>
                       选项A：<Tag>{question.a}</Tag>
                     </Col>
-                    <Col span={12}>
+                    <Col {...colProps}>
                       选项B：<Tag>{question.b}</Tag>
                     </Col>
-                  </Row>
-                  <Row>
-                    <Col span={12}>
+                    <Col {...colProps}>
                       选项C：<Tag>{question.c}</Tag>
                     </Col>
-                    <Col span={12}>
+                    <Col {...colProps}>
                       选项D：<Tag>{question.d}</Tag>
                     </Col>
                   </Row>
