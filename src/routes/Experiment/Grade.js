@@ -100,7 +100,6 @@ export default class TableList extends PureComponent {
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
     const { formValues } = this.state;
-    const { experiment } = formValues;
 
     const filters = Object.keys(filtersArg).reduce((obj, key) => {
       const newObj = { ...obj };
@@ -111,7 +110,7 @@ export default class TableList extends PureComponent {
     const params = {
       currentPage: pagination.current,
       pageSize: pagination.pageSize,
-      experiment,
+      experiment: formValues,
       ...filters,
     };
     if (sorter.field) {
@@ -124,31 +123,11 @@ export default class TableList extends PureComponent {
     });
   };
 
-  handleSearch = e => {
-    e.preventDefault();
-
-    const { dispatch, form } = this.props;
-
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
-
-      const values = {
-        ...fieldsValue,
-      };
-
-      this.setState({
-        formValues: values,
-      });
-
-      dispatch({
-        type: 'grade/fetch',
-        payload: { experiment: values.experiment },
-      });
-    });
-  };
-
   handleClassesChange = value => {
-    const { dispatch } = this.props;
+    const { form, dispatch } = this.props;
+    const { resetFields } = form;
+    resetFields('course');
+    resetFields('experiment');
     dispatch({
       type: 'course/fetch',
       payload: { classes: value },
@@ -160,7 +139,9 @@ export default class TableList extends PureComponent {
   };
 
   handleCourseChange = value => {
-    const { dispatch } = this.props;
+    const { form, dispatch } = this.props;
+    const { resetFields } = form;
+    resetFields('experiment');
     dispatch({
       type: 'experiment/fetch',
       payload: { course: value },
@@ -169,6 +150,9 @@ export default class TableList extends PureComponent {
 
   handleExperimentChange = value => {
     const { dispatch } = this.props;
+    this.setState({
+      formValues: value,
+    });
     dispatch({
       type: 'grade/fetch',
       payload: { experiment: value },
@@ -296,7 +280,7 @@ export default class TableList extends PureComponent {
     const experimentList = experiment.data.list;
     const { getFieldDecorator, getFieldValue } = form;
     return (
-      <Form onSubmit={this.handleSearch} hideRequiredMark style={{ marginTop: 8 }}>
+      <Form hideRequiredMark style={{ marginTop: 8 }}>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="班级">
