@@ -1,5 +1,5 @@
 const config = {
-  domain: 'http://localhost:8080',
+  domain: 'http://localhost:9000',
 };
 
 export default config;
