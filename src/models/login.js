@@ -23,7 +23,6 @@ export default {
       // Login successfully
       if (response.status === 'ok') {
         reloadAuthorized();
-        yield put({ type: 'user/fetchCurrent' });
         yield put(routerRedux.push('/'));
         // if (currentAuthority === 'admin') yield put(routerRedux.push('/info/teacher'));
         // if (currentAuthority === 'user') yield put(routerRedux.push('/exam/start'));

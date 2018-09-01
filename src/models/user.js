@@ -26,10 +26,15 @@ export default {
     *fetchCurrent(_, { call, put }) {
       const response = yield call(userService.fetchCurrent);
       const { currentUser } = response; // currentAuthority
-      yield put({
-        type: 'saveCurrentUser',
-        payload: currentUser,
-      });
+      if (currentUser) {
+        yield put({
+          type: 'saveCurrentUser',
+          payload: currentUser,
+        });
+      } else {
+        yield put({ type: 'login/logout' });
+      }
+
       // if (currentAuthority) {
       //   setAuthority(currentAuthority);
       //   if (currentAuthority === 'admin') yield put(routerRedux.push('/info/teacher'));
