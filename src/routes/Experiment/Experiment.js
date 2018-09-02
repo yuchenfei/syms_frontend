@@ -206,7 +206,7 @@ export default class TableList extends PureComponent {
                   {courseList.map(i => {
                     return (
                       <Option key={i.id} value={i.id}>
-                        {i.name}
+                        {i.info}
                       </Option>
                     );
                   })}
