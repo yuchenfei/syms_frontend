@@ -1,5 +1,5 @@
 const config = {
-  domain: 'http://localhost:9000',
+  domain: 'http://www.ustslab.com',
 };
 
 export default config;
