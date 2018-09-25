@@ -19,9 +19,6 @@ export default class TableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'feedback/fetch',
-    });
-    dispatch({
       type: 'item/fetch',
     });
     dispatch({
@@ -48,15 +45,6 @@ export default class TableList extends PureComponent {
     });
   };
 
-  handleFormReset = () => {
-    const { form, dispatch } = this.props;
-    form.resetFields();
-    dispatch({
-      type: 'feedback/fetch',
-      payload: {},
-    });
-  };
-
   handelDelete = id => {
     const { dispatch } = this.props;
     dispatch({
@@ -77,8 +65,19 @@ export default class TableList extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="实验名">
-              {getFieldDecorator('item')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
+              {getFieldDecorator('item', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请选择实验项目',
+                  },
+                ],
+              })(
+                <Select
+                  placeholder="请选择"
+                  style={{ width: '100%' }}
+                  onChange={this.handleItemChange}
+                >
                   {items.map(i => {
                     return (
                       <Option key={i.id} value={i.id}>
@@ -92,7 +91,14 @@ export default class TableList extends PureComponent {
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="班级">
-              {getFieldDecorator('classes')(
+              {getFieldDecorator('classes', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请选择班级',
+                  },
+                ],
+              })(
                 <Select placeholder="请选择" onChange={this.handleClassesChange}>
                   {classes.map(i => {
                     return (
@@ -109,9 +115,6 @@ export default class TableList extends PureComponent {
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">
                 查询
-              </Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
-                重置
               </Button>
             </span>
           </Col>
