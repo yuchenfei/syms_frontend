@@ -77,7 +77,7 @@ class Gallery extends Component {
           key={i}
           onClick={e => this.openLightbox(i, e)}
         >
-          <img alt="" src={obj.src} className={css(classes.source)} />
+          <img alt="" src={obj.thumbnail} className={css(classes.source)} />
         </a>
       );
     });

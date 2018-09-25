@@ -150,7 +150,7 @@ export default class TableList extends PureComponent {
                   ]}
                   extra={
                     <div style={{ width: '250px' }} inline-block>
-                      <Gallery images={i.images} />
+                      <Gallery images={i.images} showThumbnails />
                     </div>
                   }
                 >
