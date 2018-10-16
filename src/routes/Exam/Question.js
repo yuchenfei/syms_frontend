@@ -131,6 +131,13 @@ export default class TableList extends PureComponent {
     });
   };
 
+  handelUploadDelete = i => {
+    const { uploadData } = this.state;
+    const { data } = uploadData;
+    data.splice(data.findIndex(item => item.i === i), 1);
+    this.setState({ uploadData: { data } });
+  };
+
   renderForm() {
     const {
       form,
@@ -318,21 +325,12 @@ export default class TableList extends PureComponent {
                   dataSource={uploadData.data}
                   renderItem={question => (
                     <List.Item
-                      key={question.id}
+                      key={question.i}
                       actions={[
                         <div>答案：{question.answer}</div>,
-                        <div>所属实验：{this.getItemName(question.item)}</div>,
-                        <QuestionModal
-                          title="编辑题目"
-                          items={items}
-                          record={question}
-                          onOk={this.handleEdit.bind(null, question.id)}
-                        >
-                          <a>编辑</a>
-                        </QuestionModal>,
                         <Popconfirm
                           title="确认删除？"
-                          onConfirm={this.handelDelete.bind(null, question.id)}
+                          onConfirm={this.handelUploadDelete.bind(null, question.i)}
                         >
                           <a href="">删除</a>
                         </Popconfirm>,
